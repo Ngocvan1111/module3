@@ -1,154 +1,458 @@
 -- task 2:
 use furama_database ;
-select *from nhan_vien where ((ho_ten like "H%") or (ho_ten like "T%") or (ho_ten like "K%")) and (char_length(ho_ten) <=15) ;
+SELECT 
+    *
+FROM
+    nhan_vien
+WHERE
+    ((ho_ten LIKE 'H%') OR (ho_ten LIKE 'T%')
+        OR (ho_ten LIKE 'K%'))
+        AND (CHAR_LENGTH(ho_ten) <= 15);
 
 -- task3----
 use furama_database;
-select*FROM khach_hang where (((YEAR(CURDATE()) - YEAR(ngay_sinh)) - (RIGHT(CURDATE(), 5) < RIGHT(ngay_sinh, 5))) >= 18 && ((YEAR(CURDATE()) - YEAR(ngay_sinh)) - (RIGHT(CURDATE(), 5) < RIGHT(ngay_sinh, 5))) <= 50 && (dia_chi like "%Đà Nẵng%" or dia_chi like "%Quảng trị%" ));
+SELECT 
+    *
+FROM
+    khach_hang
+WHERE
+    (((YEAR(CURDATE()) - YEAR(ngay_sinh)) - (RIGHT(CURDATE(), 5) < RIGHT(ngay_sinh, 5))) >= 18
+        && ((YEAR(CURDATE()) - YEAR(ngay_sinh)) - (RIGHT(CURDATE(), 5) < RIGHT(ngay_sinh, 5))) <= 50
+        && (dia_chi LIKE '%Đà Nẵng%'
+        OR dia_chi LIKE '%Quảng trị%'));
 
 -- task4--
-select kh.ma_khach_hang,kh.ho_ten,count(hd.ma_khach_hang) as so_lan_dat_phong
-from  khach_hang kh
-join hop_dong hd on hd.ma_khach_hang = kh.ma_khach_hang
-join loai_khach lk on kh.ma_loai_khach = lk.ma_loai_khach
-where lk.ten_loai_khach = "Diamond"
-group by hd.ma_khach_hang
-order by count(hd.ma_khach_hang) ;
+SELECT 
+    kh.ma_khach_hang,
+    kh.ho_ten,
+    COUNT(hd.ma_khach_hang) AS so_lan_dat_phong
+FROM
+    khach_hang kh
+        JOIN
+    hop_dong hd ON hd.ma_khach_hang = kh.ma_khach_hang
+        JOIN
+    loai_khach lk ON kh.ma_loai_khach = lk.ma_loai_khach
+WHERE
+    lk.ten_loai_khach = 'Diamond'
+GROUP BY hd.ma_khach_hang
+ORDER BY COUNT(hd.ma_khach_hang);
 
 -- task 5--
- select kh.ma_khach_hang, kh.ho_ten, lk.ten_loai_khach, hd.ma_hop_dong, dv.ten_dich_vu, hd.ngay_lam_hop_dong,hd.ngay_ket_thuc, (dv.chi_phi_thue +sum(dvdk.gia*hdct.so_luong)) as tong_tien
-from hop_dong hd
-left join khach_hang kh on hd.ma_khach_hang = kh.ma_khach_hang
-left join loai_khach lk on kh.ma_loai_khach = kh.ma_loai_khach
-left join dich_vu dv on hd.ma_dich_vu = hd.ma_dich_vu
-left join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
-left join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
-group by hd.ma_hop_dong;
+SELECT 
+    kh.ma_khach_hang,
+    kh.ho_ten,
+    lk.ten_loai_khach,
+    hd.ma_hop_dong,
+    dv.ten_dich_vu,
+    hd.ngay_lam_hop_dong,
+    hd.ngay_ket_thuc,
+    (dv.chi_phi_thue + SUM(dvdk.gia * hdct.so_luong)) AS tong_tien
+FROM
+    hop_dong hd
+        LEFT JOIN
+    khach_hang kh ON hd.ma_khach_hang = kh.ma_khach_hang
+        LEFT JOIN
+    loai_khach lk ON kh.ma_loai_khach = kh.ma_loai_khach
+        LEFT JOIN
+    dich_vu dv ON hd.ma_dich_vu = hd.ma_dich_vu
+        LEFT JOIN
+    hop_dong_chi_tiet hdct ON hd.ma_hop_dong = hdct.ma_hop_dong
+        LEFT JOIN
+    dich_vu_di_kem dvdk ON hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+GROUP BY hd.ma_hop_dong;
  
  -- task 6 --
- -- 6.	Hiển thị ma_dich_vu, ten_dich_vu, dien_tich, chi_phi_thue, ten_loai_dich_vu của tất cả các loại dịch vụ chưa từng được khách hàng thực hiện đặt từ quý 1 của năm 2021 (Quý 1 là tháng 1, 2, 3).--
- select dv.ma_dich_vu,dv.ten_dich_vu,dv.dien_tich,dv.chi_phi_thue,ldv.ten_loai_dich_vu
- from dich_vu dv
- join loai_dich_vu ldv on dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
- left join hop_dong hd on dv.ma_dich_vu = hd.ma_dich_vu
- where dv.ma_dich_vu not in (  select hd.ma_dich_vu
- from hop_dong hd
- where (year(hd.ngay_lam_hop_dong) = 2021 and month(hd.ngay_lam_hop_dong) between 1 and 3)
- group by hd.ma_dich_vu) 
- group by hd.ma_dich_vu;
+SELECT 
+    dv.ma_dich_vu,
+    dv.ten_dich_vu,
+    dv.dien_tich,
+    dv.chi_phi_thue,
+    ldv.ten_loai_dich_vu
+FROM
+    dich_vu dv
+        JOIN
+    loai_dich_vu ldv ON dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
+        LEFT JOIN
+    hop_dong hd ON dv.ma_dich_vu = hd.ma_dich_vu
+WHERE
+    dv.ma_dich_vu NOT IN (SELECT 
+            hd.ma_dich_vu
+        FROM
+            hop_dong hd
+        WHERE
+            (YEAR(hd.ngay_lam_hop_dong) = 2021
+                AND MONTH(hd.ngay_lam_hop_dong) BETWEEN 1 AND 3)
+        GROUP BY hd.ma_dich_vu)
+GROUP BY hd.ma_dich_vu;
  
  -- 7.	Hiển thị thông tin ma_dich_vu, ten_dich_vu, dien_tich, so_nguoi_toi_da, chi_phi_thue, ten_loai_dich_vu của tất cả các loại dịch vụ đã từng được khách hàng đặt phòng trong năm 2020 nhưng chưa từng được khách hàng đặt phòng trong năm 2021.--
- select dv.ma_dich_vu,dv.ten_dich_vu,dv.dien_tich,dv.so_nguoi_toi_da
- from dich_vu dv
- join hop_dong hd on dv.ma_dich_vu = hd.ma_dich_vu
- join loai_dich_vu ldv on dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
- where dv.ma_dich_vu in (select dv.ma_dich_vu
-from dich_vu dv
-join hop_dong hd on dv.ma_dich_vu = hd.ma_dich_vu
-where year(hd.ngay_lam_hop_dong) = 2020
-group by hd.ma_dich_vu)
- and dv.ma_dich_vu not in (select dv.ma_dich_vu
-from dich_vu dv
-join hop_dong hd on dv.ma_dich_vu = hd.ma_dich_vu
-where year(hd.ngay_lam_hop_dong) = 2021
-group by hd.ma_dich_vu)
-group by hd.ma_dich_vu
+SELECT 
+    dv.ma_dich_vu,
+    dv.ten_dich_vu,
+    dv.dien_tich,
+    dv.so_nguoi_toi_da
+FROM
+    dich_vu dv
+        JOIN
+    hop_dong hd ON dv.ma_dich_vu = hd.ma_dich_vu
+        JOIN
+    loai_dich_vu ldv ON dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
+WHERE
+    dv.ma_dich_vu IN (SELECT 
+            dv.ma_dich_vu
+        FROM
+            dich_vu dv
+                JOIN
+            hop_dong hd ON dv.ma_dich_vu = hd.ma_dich_vu
+        WHERE
+            YEAR(hd.ngay_lam_hop_dong) = 2020
+        GROUP BY hd.ma_dich_vu)
+        AND dv.ma_dich_vu NOT IN (SELECT 
+            dv.ma_dich_vu
+        FROM
+            dich_vu dv
+                JOIN
+            hop_dong hd ON dv.ma_dich_vu = hd.ma_dich_vu
+        WHERE
+            YEAR(hd.ngay_lam_hop_dong) = 2021
+        GROUP BY hd.ma_dich_vu)
+GROUP BY hd.ma_dich_vu
 ;
 
 -- task8 --
-select khach_hang.ho_ten
-from khach_hang
-group by khach_hang.ho_ten;
+SELECT 
+    khach_hang.ho_ten
+FROM
+    khach_hang
+GROUP BY khach_hang.ho_ten;
 
 -- task8_2--
-select distinct khach_hang.ho_ten
-	from khach_hang;  
+SELECT DISTINCT
+    khach_hang.ho_ten
+FROM
+    khach_hang;
 
 -- task8_3 --
-select khach_hang.ho_ten
-	from khach_hang
-	union
-	select khach_hang.ho_ten
-	from khach_hang;
+SELECT 
+    khach_hang.ho_ten
+FROM
+    khach_hang 
+UNION SELECT 
+    khach_hang.ho_ten
+FROM
+    khach_hang;
 
 -- task 9 --
-select month(hop_dong.ngay_lam_hop_dong) as thang, count(hop_dong.ma_khach_hang) as so_luong_nguoi_dat_dich_vu
-	from hop_dong
-	where year(hop_dong.ngay_lam_hop_dong) = 2021
-	group by month(hop_dong.ngay_lam_hop_dong)
-	order by month(hop_dong.ngay_lam_hop_dong);
+SELECT 
+    MONTH(hop_dong.ngay_lam_hop_dong) AS thang,
+    COUNT(hop_dong.ma_khach_hang) AS so_luong_nguoi_dat_dich_vu
+FROM
+    hop_dong
+WHERE
+    YEAR(hop_dong.ngay_lam_hop_dong) = 2021
+GROUP BY MONTH(hop_dong.ngay_lam_hop_dong)
+ORDER BY MONTH(hop_dong.ngay_lam_hop_dong);
  
  -- task 10 --
-select hd.ma_hop_dong,hd.ngay_lam_hop_dong,hd.ngay_ket_thuc,hd.tien_dat_coc, ifnull(sum(hdct.so_luong), 0) as so_luong_dich_vu_di_kem
-	from hop_dong hd
-	left join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
-	left join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
-	group by hd.ma_hop_dong;
+SELECT 
+    hd.ma_hop_dong,
+    hd.ngay_lam_hop_dong,
+    hd.ngay_ket_thuc,
+    hd.tien_dat_coc,
+    IFNULL(SUM(hdct.so_luong), 0) AS so_luong_dich_vu_di_kem
+FROM
+    hop_dong hd
+        LEFT JOIN
+    hop_dong_chi_tiet hdct ON hd.ma_hop_dong = hdct.ma_hop_dong
+        LEFT JOIN
+    dich_vu_di_kem dvdk ON hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+GROUP BY hd.ma_hop_dong;
  -- task 11--
- select hdct.ma_dich_vu_di_kem,dvdk.ten_dich_vu_di_kem
-	 from khach_hang kh
-	 join loai_khach lk on kh.ma_loai_khach = lk.ma_loai_khach
-	 join hop_dong hd on kh.ma_khach_hang = hd.ma_khach_hang
-	 join hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
-	 join dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
-	 where lk.ten_loai_khach like 'Diamond' and kh.dia_chi like '%Vinh' or kh.dia_chi like '%Quảng Ngãi';
+SELECT 
+    hdct.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem
+FROM
+    khach_hang kh
+        JOIN
+    loai_khach lk ON kh.ma_loai_khach = lk.ma_loai_khach
+        JOIN
+    hop_dong hd ON kh.ma_khach_hang = hd.ma_khach_hang
+        JOIN
+    hop_dong_chi_tiet hdct ON hdct.ma_hop_dong = hd.ma_hop_dong
+        JOIN
+    dich_vu_di_kem dvdk ON dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+WHERE
+    lk.ten_loai_khach LIKE 'Diamond'
+        AND kh.dia_chi LIKE '%Vinh'
+        OR kh.dia_chi LIKE '%Quảng Ngãi';
  
  -- task 12 --
- select hd.ma_hop_dong ,nv.ho_ten,kh.ho_ten,kh.so_dien_thoai,dv.ten_dich_vu,ifnull(sum(hdct.so_luong),0)  as so_luong_dich_vu_di_kem,hd.tien_dat_coc
-	 from hop_dong hd
-	 left join nhan_vien nv on hd.ma_nhan_vien = nv.ma_nhan_vien
-	 left join khach_hang kh on hd.ma_khach_hang = kh.ma_khach_hang
-	 left join dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
-	 left join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
-	 where hd.ma_hop_dong in ( select hd.ma_hop_dong
-	 from hop_dong hd
-	 where (month(hd.ngay_lam_hop_dong) between 10 and 12) and (year(hd.ngay_lam_hop_dong) = 2020)) and hd.ma_hop_dong not in ( 
-	  select hd.ma_hop_dong
-	 from hop_dong hd
-	 where (month(hd.ngay_lam_hop_dong) between 01 and 06) and (year(hd.ngay_lam_hop_dong) = 2021))
-	 group by hdct.ma_hop_dong;
+SELECT 
+    hd.ma_hop_dong,
+    nv.ho_ten,
+    kh.ho_ten,
+    kh.so_dien_thoai,
+    dv.ten_dich_vu,
+    IFNULL(SUM(hdct.so_luong), 0) AS so_luong_dich_vu_di_kem,
+    hd.tien_dat_coc
+FROM
+    hop_dong hd
+        LEFT JOIN
+    nhan_vien nv ON hd.ma_nhan_vien = nv.ma_nhan_vien
+        LEFT JOIN
+    khach_hang kh ON hd.ma_khach_hang = kh.ma_khach_hang
+        LEFT JOIN
+    dich_vu dv ON hd.ma_dich_vu = dv.ma_dich_vu
+        LEFT JOIN
+    hop_dong_chi_tiet hdct ON hd.ma_hop_dong = hdct.ma_hop_dong
+WHERE
+    hd.ma_hop_dong IN (SELECT 
+            hd.ma_hop_dong
+        FROM
+            hop_dong hd
+        WHERE
+            (MONTH(hd.ngay_lam_hop_dong) BETWEEN 10 AND 12)
+                AND (YEAR(hd.ngay_lam_hop_dong) = 2020))
+        AND hd.ma_hop_dong NOT IN (SELECT 
+            hd.ma_hop_dong
+        FROM
+            hop_dong hd
+        WHERE
+            (MONTH(hd.ngay_lam_hop_dong) BETWEEN 01 AND 06)
+                AND (YEAR(hd.ngay_lam_hop_dong) = 2021))
+GROUP BY hdct.ma_hop_dong;
  
  -- task 13	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng. (Lưu ý là có thể có nhiều dịch vụ có số lần sử dụng nhiều như nhau).--
 
-create view sum_view as
-	select hdct.ma_dich_vu_di_kem as ma_dich_vu_di_kem, sum(hdct.so_luong) as tong_lan_dung
-	from hop_dong_chi_tiet hdct
-	group by hdct.ma_dich_vu_di_kem;
+CREATE VIEW sum_view AS
+    SELECT 
+        hdct.ma_dich_vu_di_kem AS ma_dich_vu_di_kem,
+        SUM(hdct.so_luong) AS tong_lan_dung
+    FROM
+        hop_dong_chi_tiet hdct
+    GROUP BY hdct.ma_dich_vu_di_kem;
 
-select * 
-	from dich_vu_di_kem 
-	join sum_view on dich_vu_di_kem.ma_dich_vu_di_kem = sum_view.ma_dich_vu_di_kem
-	where dich_vu_di_kem.ma_dich_vu_di_kem in (select sum_view.ma_dich_vu_di_kem
-	from sum_view
-	where sum_view.tong_lan_dung in  (select max(sum_view.tong_lan_dung) from sum_view));
+SELECT 
+    *
+FROM
+    dich_vu_di_kem
+        JOIN
+    sum_view ON dich_vu_di_kem.ma_dich_vu_di_kem = sum_view.ma_dich_vu_di_kem
+WHERE
+    dich_vu_di_kem.ma_dich_vu_di_kem IN (SELECT 
+            sum_view.ma_dich_vu_di_kem
+        FROM
+            sum_view
+        WHERE
+            sum_view.tong_lan_dung IN (SELECT 
+                    MAX(sum_view.tong_lan_dung)
+                FROM
+                    sum_view));
 
 -- 14 Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất. Thông tin hiển thị bao gồm ma_hop_dong, ten_loai_dich_vu, ten_dich_vu_di_kem, so_lan_su_dung (được tính dựa trên việc count các ma_dich_vu_di_kem)--
  
- select hdct.ma_hop_dong,hdct.ma_dich_vu_di_kem,ldv.ten_loai_dich_vu,dvdk.ten_dich_vu_di_kem, count(hdct.ma_dich_vu_di_kem)
- from hop_dong_chi_tiet hdct
- join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
- join hop_dong hd on hdct.ma_hop_dong = hd.ma_hop_dong
- join dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
- join loai_dich_vu ldv on dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
- group by dvdk.ma_dich_vu_di_kem
- having count(hdct.ma_dich_vu_di_kem) = 1
- order by hd.ma_hop_dong;
+SELECT 
+    hdct.ma_hop_dong,
+    hdct.ma_dich_vu_di_kem,
+    ldv.ten_loai_dich_vu,
+    dvdk.ten_dich_vu_di_kem,
+    COUNT(hdct.ma_dich_vu_di_kem)
+FROM
+    hop_dong_chi_tiet hdct
+        JOIN
+    dich_vu_di_kem dvdk ON hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+        JOIN
+    hop_dong hd ON hdct.ma_hop_dong = hd.ma_hop_dong
+        JOIN
+    dich_vu dv ON hd.ma_dich_vu = dv.ma_dich_vu
+        JOIN
+    loai_dich_vu ldv ON dv.ma_loai_dich_vu = ldv.ma_loai_dich_vu
+GROUP BY dvdk.ma_dich_vu_di_kem
+HAVING COUNT(hdct.ma_dich_vu_di_kem) = 1
+ORDER BY hd.ma_hop_dong;
  
  -- 15-- 
- select nv.ma_nhan_vien,nv.ho_ten,td.ten_trinh_do,bp.ten_bo_phan,nv.so_dien_thoai,nv.dia_chi
- from nhan_vien nv
- join hop_dong hd on nv.ma_nhan_vien = hd.ma_nhan_vien
- join trinh_do td on nv.ma_trinh_do = td.ma_trinh_do
- join bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
- where year(hd.ngay_lam_hop_dong ) between 2020 and 2021
-  group by hd.ma_nhan_vien
- having (count(hd.ma_nhan_vien) between 1 and 3);
-
+SELECT 
+    nv.ma_nhan_vien,
+    nv.ho_ten,
+    td.ten_trinh_do,
+    bp.ten_bo_phan,
+    nv.so_dien_thoai,
+    nv.dia_chi
+FROM
+    nhan_vien nv
+        JOIN
+    hop_dong hd ON nv.ma_nhan_vien = hd.ma_nhan_vien
+        JOIN
+    trinh_do td ON nv.ma_trinh_do = td.ma_trinh_do
+        JOIN
+    bo_phan bp ON nv.ma_bo_phan = bp.ma_bo_phan
+WHERE
+    YEAR(hd.ngay_lam_hop_dong) BETWEEN 2020 AND 2021
+GROUP BY hd.ma_nhan_vien
+HAVING (COUNT(hd.ma_nhan_vien) BETWEEN 1 AND 3);
+ 
+ -- 16 Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021 --
+ SET SQL_SAFE_UPDATES =0; 
+ delete from  nhan_vien nv
+	 where nv.ma_nhan_vien not in (select hop_dong.ma_nhan_vien
+	 from hop_dong
+	 where year(hop_dong.ngay_lam_hop_dong) in(2019,2020,2021))
+	 ;
+SELECT 
+    *
+FROM
+    nhan_vien;
+ 
+-- 17 Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond, chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ--
  
 
 
+CREATE VIEW tong_view AS
+    SELECT 
+        ma_khach, tong_tien
+    FROM
+        (SELECT 
+            hd.ma_khach_hang AS ma_khach,
+                IFNULL(dv.chi_phi_thue, 0) + IFNULL(SUM(hdct.so_luong) * dvdk.gia, 0) AS tong_tien
+        FROM
+            hop_dong hd
+        LEFT JOIN dich_vu dv ON hd.ma_dich_vu = dv.ma_dich_vu
+        LEFT JOIN hop_dong_chi_tiet hdct ON hdct.ma_hop_dong = hd.ma_hop_dong
+        LEFT JOIN dich_vu_di_kem dvdk ON hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+        WHERE
+            YEAR(hd.ngay_lam_hop_dong) = '2021'
+        GROUP BY hd.ma_hop_dong
+        ORDER BY hd.ma_hop_dong) AS a;
+
+SELECT 
+    *
+FROM
+    tong_view;
+------------------- ================ ---------------
+UPDATE khach_hang kh 
+SET 
+    kh.ma_loai_khach = 1
+WHERE
+    kh.ma_khach_hang IN (SELECT 
+            *
+        FROM
+            (SELECT 
+                kh.ma_khach_hang
+            FROM
+                khach_hang kh
+            JOIN tong_view tv ON kh.ma_khach_hang = tv.ma_khach
+            WHERE
+                kh.ma_khach_hang IN (SELECT 
+                        tv.ma_khach
+                    FROM
+                        tong_view)
+                    AND tv.tong_tien > 1000000
+                    AND kh.ma_loai_khach = 2) abc)
+;
+
+-- task 18 --
+SET SQL_SAFE_UPDATES =0; 
+delete from khach_hang
+where khach_hang.ma_khach_hang in (select* from (select khach_hang.ma_khach_hang from khach_hang join hop_dong on hop_dong.ma_khach_hang = khach_hang.ma_khach_hang where year(hop_dong.ngay_lam_hop_dong) < 2021) as abc)  ;
+
+-- task 19 Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi--
+update dich_vu_di_kem 
+set gia = gia*2
+where dich_vu_di_kem.ma_dich_vu_di_kem in (select hop_dong_chi_tiet.ma_dich_vu_di_kem
+from hop_dong_chi_tiet
+join hop_dong on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+where year(hop_dong.ngay_lam_hop_dong) = 2020
+group by ma_dich_vu_di_kem
+having sum(so_luong) > 10);
+-- task 20 Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống, thông tin hiển thị bao gồm id (ma_nhan_vien, ma_khach_hang), ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi. -- 
+
+select nv.ma_nhan_vien as '#id', nv.ho_ten, nv.email,nv.so_dien_thoai,nv.ngay_sinh,nv.dia_chi
+from nhan_vien nv
+union 
+select kh.ma_khach_hang as '#id', kh.ho_ten, kh.email,kh.so_dien_thoai,kh.ngay_sinh,kh.dia_chi
+from khach_hang kh;
+
+-- task 21	Tạo khung nhìn có tên là v_nhan_vien để lấy được thông tin của tất cả các nhân viên có địa chỉ là “Hải Châu” và đã từng lập hợp đồng cho một hoặc nhiều khách hàng bất kì với ngày lập hợp đồng là “12/12/2019”--
+
+create view v_nhan_vien as
+select * 
+from nhan_vien 
+where nhan_vien.ma_nhan_vien in (select*from (
+select nhan_vien.ma_nhan_vien
+from nhan_vien 
+join hop_dong on hop_dong.ma_nhan_vien = nhan_vien.ma_nhan_vien
+where nhan_vien.dia_chi like "% Hải Châu%" and hop_dong.ngay_lam_hop_dong = "2019-12-12"
+) as dbc);
+
+select* from v_nhan_vien; 
 
 
+-- task 22 Thông qua khung nhìn v_nhan_vien thực hiện cập nhật địa chỉ thành “Liên Chiểu” đối với tất cả các nhân viên được nhìn thấy bởi khung nhìn này--
+create view l_nhan_vien as
+select *
+from v_nhan_vien;
+
+update l_nhan_vien
+set l_nhan_vien.dia_chi = 'Liên Chiểu'
+;
+select* from l_nhan_vien; 
+
+-- task 23	Tạo Stored Procedure sp_xoa_khach_hang dùng để xóa thông tin của một khách hàng nào đó với ma_khach_hang được truyền vào như là 1 tham số của sp_xoa_khach_hang--
+
+DELIMITER //
+CREATE PROCEDURE sp_xoa_khach_hang(IN ma_khach_hang_in int)
+BEGIN
+delete from khach_hang
+where khach_hang.ma_khach_hang = ma_khach_hang_in;
+END;
+//DELIMITER ;
+
+call sp_xoa_khach_hang(1);
+
+-- task 24 Tạo Stored Procedure sp_them_moi_hop_dong dùng để thêm mới vào bảng hop_dong với yêu cầu sp_them_moi_hop_dong phải thực hiện kiểm tra tính hợp lệ của dữ liệu bổ sung, với nguyên tắc không được trùng khóa chính và đảm bảo toàn vẹn tham chiếu đến các bảng liên quan.--
+
+DELIMITER //
+CREATE PROCEDURE sp_them_moi_hop_dong(in ma_hop_dong int ,
+in ngay_lam_hop_dong datetime,
+in ngay_ket_thuc datetime,
+in tien_dat_coc double, 
+in ma_nhan_vien int,
+in ma_khach_hang int,
+in ma_dich_vu int)
+BEGIN
+insert into hop_dong(ma_hop_dong, ngay_lam_hop_dong, ngay_ket_thuc, tien_dat_coc, ma_nhan_vien, ma_khach_hang, ma_dich_vu)
+values
+(ma_hop_dong, ngay_lam_hop_dong, ngay_ket_thuc, tien_dat_coc, ma_nhan_vien, ma_khach_hang, ma_dich_vu);
+END;
+//DELIMITER ;
+call sp_them_moi_hop_dong(15,'2020-12-08','2020-12-08','0',3,1,3);
+
+-- task 25 Tạo Trigger có tên tr_xoa_hop_dong khi xóa bản ghi trong bảng hop_dong thì hiển thị tổng số lượng bản ghi còn lại có trong bảng hop_dong ra giao diện console của database --
+select*from hop_dong;
+create table data_history(tong_so_luong_ban_ghi_con_lai int );
+delimiter //
+create function abc (id int)
+returns int
+begin
+declare tong int default 0;
+select count(hop_dong.ma_hop_dong) into tong from hop_dong;
+return tong;
+end //
+delimiter ;
+
+drop table data_history;
+DELIMITER //
+CREATE trigger tr_xoa_hop_dong
+  after delete on hop_dong 
+  for each row
+BEGIN
+insert into data_history(tong_so_luong_ban_ghi_con_lai) values ();
+END;
+//DELIMITER ;
+drop trigger tr_xoa_hop_dong;
+
+delete from hop_dong
+where hop_dong.ma_hop_dong = 15;
 
 
-
+select count(ma_hop_dong) as so_luong from hop_dong  ;
