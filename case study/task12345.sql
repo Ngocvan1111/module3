@@ -351,51 +351,98 @@ WHERE
 ;
 
 -- task 18 --
-SET SQL_SAFE_UPDATES =0; 
-delete from khach_hang
-where khach_hang.ma_khach_hang in (select* from (select khach_hang.ma_khach_hang from khach_hang join hop_dong on hop_dong.ma_khach_hang = khach_hang.ma_khach_hang where year(hop_dong.ngay_lam_hop_dong) < 2021) as abc)  ;
+SET SQL_SAFE_UPDATES =0;
+DELETE FROM khach_hang 
+WHERE
+    khach_hang.ma_khach_hang IN (SELECT 
+        *
+    FROM
+        (SELECT 
+            khach_hang.ma_khach_hang
+        FROM
+            khach_hang
+        JOIN hop_dong ON hop_dong.ma_khach_hang = khach_hang.ma_khach_hang
+        
+        WHERE
+            YEAR(hop_dong.ngay_lam_hop_dong) < 2021) AS abc);
 
 -- task 19 Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi--
-update dich_vu_di_kem 
-set gia = gia*2
-where dich_vu_di_kem.ma_dich_vu_di_kem in (select hop_dong_chi_tiet.ma_dich_vu_di_kem
-from hop_dong_chi_tiet
-join hop_dong on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
-where year(hop_dong.ngay_lam_hop_dong) = 2020
-group by ma_dich_vu_di_kem
-having sum(so_luong) > 10);
+UPDATE dich_vu_di_kem 
+SET 
+    gia = gia * 2
+WHERE
+    dich_vu_di_kem.ma_dich_vu_di_kem IN (SELECT 
+            hop_dong_chi_tiet.ma_dich_vu_di_kem
+        FROM
+            hop_dong_chi_tiet
+                JOIN
+            hop_dong ON hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+        WHERE
+            YEAR(hop_dong.ngay_lam_hop_dong) = 2020
+        GROUP BY ma_dich_vu_di_kem
+        HAVING SUM(so_luong) > 10);
 -- task 20 Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống, thông tin hiển thị bao gồm id (ma_nhan_vien, ma_khach_hang), ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi. -- 
 
-select nv.ma_nhan_vien as '#id', nv.ho_ten, nv.email,nv.so_dien_thoai,nv.ngay_sinh,nv.dia_chi
-from nhan_vien nv
-union 
-select kh.ma_khach_hang as '#id', kh.ho_ten, kh.email,kh.so_dien_thoai,kh.ngay_sinh,kh.dia_chi
-from khach_hang kh;
+SELECT 
+    nv.ma_nhan_vien AS '#id',
+    nv.ho_ten,
+    nv.email,
+    nv.so_dien_thoai,
+    nv.ngay_sinh,
+    nv.dia_chi
+FROM
+    nhan_vien nv 
+UNION SELECT 
+    kh.ma_khach_hang AS '#id',
+    kh.ho_ten,
+    kh.email,
+    kh.so_dien_thoai,
+    kh.ngay_sinh,
+    kh.dia_chi
+FROM
+    khach_hang kh;
 
 -- task 21	Tạo khung nhìn có tên là v_nhan_vien để lấy được thông tin của tất cả các nhân viên có địa chỉ là “Hải Châu” và đã từng lập hợp đồng cho một hoặc nhiều khách hàng bất kì với ngày lập hợp đồng là “12/12/2019”--
 
-create view v_nhan_vien as
-select * 
-from nhan_vien 
-where nhan_vien.ma_nhan_vien in (select*from (
-select nhan_vien.ma_nhan_vien
-from nhan_vien 
-join hop_dong on hop_dong.ma_nhan_vien = nhan_vien.ma_nhan_vien
-where nhan_vien.dia_chi like "% Hải Châu%" and hop_dong.ngay_lam_hop_dong = "2019-12-12"
-) as dbc);
+CREATE VIEW v_nhan_vien AS
+    SELECT 
+        *
+    FROM
+        nhan_vien
+    WHERE
+        nhan_vien.ma_nhan_vien IN (SELECT 
+                *
+            FROM
+                (SELECT 
+                    nhan_vien.ma_nhan_vien
+                FROM
+                    nhan_vien
+                JOIN hop_dong ON hop_dong.ma_nhan_vien = nhan_vien.ma_nhan_vien
+                WHERE
+                    nhan_vien.dia_chi LIKE '% Hải Châu%'
+                        AND hop_dong.ngay_lam_hop_dong = '2019-12-12') AS dbc);
 
-select* from v_nhan_vien; 
+SELECT 
+    *
+FROM
+    v_nhan_vien;
 
 
 -- task 22 Thông qua khung nhìn v_nhan_vien thực hiện cập nhật địa chỉ thành “Liên Chiểu” đối với tất cả các nhân viên được nhìn thấy bởi khung nhìn này--
-create view l_nhan_vien as
-select *
-from v_nhan_vien;
+CREATE VIEW l_nhan_vien AS
+    SELECT 
+        *
+    FROM
+        v_nhan_vien;
 
-update l_nhan_vien
-set l_nhan_vien.dia_chi = 'Liên Chiểu'
+UPDATE l_nhan_vien 
+SET 
+    l_nhan_vien.dia_chi = 'Liên Chiểu'
 ;
-select* from l_nhan_vien; 
+SELECT 
+    *
+FROM
+    l_nhan_vien; 
 
 -- task 23	Tạo Stored Procedure sp_xoa_khach_hang dùng để xóa thông tin của một khách hàng nào đó với ma_khach_hang được truyền vào như là 1 tham số của sp_xoa_khach_hang--
 
@@ -428,17 +475,33 @@ END;
 call sp_them_moi_hop_dong(15,'2020-12-08','2020-12-08','0',3,1,3);
 
 -- task 25 Tạo Trigger có tên tr_xoa_hop_dong khi xóa bản ghi trong bảng hop_dong thì hiển thị tổng số lượng bản ghi còn lại có trong bảng hop_dong ra giao diện console của database --
-select*from hop_dong;
-create table data_history(tong_so_luong_ban_ghi_con_lai int );
+
+CREATE TABLE data_history (
+    tong_so_luong_ban_ghi_con_lai INT
+);
 delimiter //
-create function abc (id int)
+create function abc ()
 returns int
+deterministic
 begin
 declare tong int default 0;
 select count(hop_dong.ma_hop_dong) into tong from hop_dong;
 return tong;
 end //
 delimiter ;
+-- - --
+delimiter //
+create function abd ()
+returns int
+deterministic
+begin
+declare tong1 int default 0;
+select count(data_history.tong_so_luong_ban_ghi_con_lai) into tong1 from data_history;
+return tong1;
+end //
+delimiter ;
+
+-- ---
 
 drop table data_history;
 DELIMITER //
@@ -446,13 +509,22 @@ CREATE trigger tr_xoa_hop_dong
   after delete on hop_dong 
   for each row
 BEGIN
-insert into data_history(tong_so_luong_ban_ghi_con_lai) values ();
+if abd() = 0 then 
+insert into data_history(tong_so_luong_ban_ghi_con_lai) values (abc());
+else 
+SET SQL_SAFE_UPDATES =0; 
+update data_history
+set data_history.tong_so_luong_ban_ghi_con_lai = abc();
+end if;
 END;
 //DELIMITER ;
 drop trigger tr_xoa_hop_dong;
 
-delete from hop_dong
-where hop_dong.ma_hop_dong = 15;
+DELETE FROM hop_dong 
+WHERE
+    hop_dong.ma_hop_dong = 10;
 
-
-select count(ma_hop_dong) as so_luong from hop_dong  ;
+SELECT 
+    COUNT(ma_hop_dong) AS so_luong
+FROM
+    hop_dong;

@@ -1,0 +1,24 @@
+*{
+    box-sizing: border-box;
+
+}
+h1{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+p{
+    text-indent: 1.5em;
+    text-align: justify;
+}
+#id-123{
+    color: dodgerblue;
+    text-decoration: none;
+}
+.class-123{
+    color: blue;
+    text-decoration: none;
+}
+sup.sup_css{
+    font-size: 70%;
+    color: #0074d9;
+}

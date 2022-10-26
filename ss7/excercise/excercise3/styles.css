@@ -1,0 +1,171 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#main {
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    z-index: 1;
+}
+
+#nav {
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+
+}
+
+#nav > li {
+    display: inline-block;
+
+}
+
+li {
+    width: 120px;
+}
+
+#nav li a {
+    padding: 0 24px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+#nav > li:hover > a {
+    background-color: red;
+    color: yellow;
+
+
+}
+
+#nav li:hover .sub_nav {
+    display: block;
+    background-color: #ffffff;
+}
+
+#nav li:hover a {
+    color: black;
+}
+
+.sub_nav {
+    position: absolute;
+    list-style-type: none;
+    display: none;
+}
+
+.sub_nav li:hover {
+    background-color: yellow;
+    color: black;
+
+}
+
+#middle {
+    width: 100%;
+    position: absolute;
+    top: 40px;
+    bottom: 40px;
+    /*min-height: 1000px;*/
+
+}
+.abc{
+    width: 60px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    margin:0 auto;
+    line-height: 40px;
+
+}
+.abc:hover{
+    background-color: #dd33dd;
+    cursor: pointer;
+
+}
+
+#left {
+    width: 16.66%;
+    min-height: 1000px;
+    float: left;
+    background-color: #CDCDCD;
+}
+
+#content {
+    float: left;
+    width: 66.66%;
+    min-height: 1000px;
+    background-color: #FFFFFF;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#right {
+    width: 16.66%;
+    min-height: 1000px;
+    background-color: #CDCDCD;
+    float: left;
+    padding-top: 20px;
+
+
+}
+
+.sub_right {
+    margin: 10px auto;
+    background-color: #0074d9;
+    width: 85%;
+    height: 70px;
+    border-radius: 10px;
+    line-height: 70px;
+    text-align: center;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 40px;
+    background-color: aqua;
+    line-height: 40px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 800px ) {
+    /*#middle{*/
+    /*    height: auto;*/
+    /*}*/
+    #right, #content {
+        width: 100%;
+        min-height: 200px;
+
+    }
+
+    #right {
+        bottom: -40px;
+
+
+    }
+
+    #left {
+        display: none;
+    }
+}
+@media only screen and(orientation: landscape){
+    body {
+        background-color: #e3c9e3;
+    }
+
+}
