@@ -427,7 +427,6 @@ SELECT
 FROM
     v_nhan_vien;
 
-
 -- task 22 Thông qua khung nhìn v_nhan_vien thực hiện cập nhật địa chỉ thành “Liên Chiểu” đối với tất cả các nhân viên được nhìn thấy bởi khung nhìn này--
 CREATE VIEW l_nhan_vien AS
     SELECT 
@@ -472,7 +471,7 @@ values
 (ma_hop_dong, ngay_lam_hop_dong, ngay_ket_thuc, tien_dat_coc, ma_nhan_vien, ma_khach_hang, ma_dich_vu);
 END;
 //DELIMITER ;
-call sp_them_moi_hop_dong(15,'2020-12-08','2020-12-08','0',3,1,3);
+call sp_them_moi_hop_dong(1,'2020-12-08','2020-12-08','0',3,1,3);
 
 -- task 25 Tạo Trigger có tên tr_xoa_hop_dong khi xóa bản ghi trong bảng hop_dong thì hiển thị tổng số lượng bản ghi còn lại có trong bảng hop_dong ra giao diện console của database --
 
@@ -528,3 +527,90 @@ SELECT
     COUNT(ma_hop_dong) AS so_luong
 FROM
     hop_dong;
+    
+ -- task 26--
+ 
+CREATE TABLE data_history_2 (
+    ma_hop_dong INT,
+    message VARCHAR(200),
+    update_date DATE
+);
+ drop table data_history_2;
+ DELIMITER //
+CREATE trigger tr_cap_nhat_hop_dong
+  before update on hop_dong 
+  for each row
+BEGin
+if  datediff(new.ngay_ket_thuc,old.ngay_lam_hop_dong) <=2  or datediff(new.ngay_ket_thuc,new.ngay_lam_hop_dong) <=2  then insert into data_history_2(ma_hop_dong, message,update_date) values (new.ma_hop_dong,"Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày",now())
+; 
+end if;
+END;
+//DELIMITER ;
+drop trigger tr_cap_nhat_hop_dong;
+
+SET SQL_SAFE_UPDATES =0;
+UPDATE hop_dong 
+SET 
+    ngay_ket_thuc = '2020-12-12'
+WHERE
+    ma_hop_dong = 1;
+
+SELECT 
+    DATE(ngay_ket_thuc) - DATE(ngay_lam_hop_dong) AS anc
+FROM
+    hop_dong
+WHERE
+    ma_hop_dong = 1
+ORDER BY ma_hop_dong
+;
+
+SELECT 
+    DATEDIFF(ngay_ket_thuc, ngay_lam_hop_dong) AS a
+FROM
+    hop_dong
+WHERE
+    ma_hop_dong = 1;
+
+
+SELECT 'hello world' AS message;
+
+-- task 27 a --
+delimiter //
+create function func_dem_dich_vu ()
+returns int
+deterministic
+begin
+declare tong int default 0;
+select count(tong_view.ma_khach) into tong from tong_view where tong_view.tong_tien > 2000000;
+return tong;
+end //
+delimiter ;
+
+drop function func_dem_dich_vu ;
+
+SELECT FUNC_DEM_DICH_VU() AS dich_vu_su_dung_tren_2_trieu;
+
+-- task 27 b --
+delimiter //
+create function func_tinh_thoi_gian_hop_dong (ma_khach_hang_in int)
+ returns int
+deterministic
+begin
+  declare max int default 0;
+ select max(thoi_gian_thue) from (select datediff(ngay_ket_thuc,ngay_lam_hop_dong) as thoi_gian_thue from hop_dong where hop_dong.ma_khach_hang = ma_khach_hang_in group by ma_hop_dong) as a into max;
+return max;
+end //
+delimiter ;
+
+drop function func_tinh_thoi_gian_hop_dong;
+
+select func_tinh_thoi_gian_hop_dong(4) as thoi_gian_dai_nhat_la;
+
+-- task 28 --
+
+DELIMITER //
+CREATE PROCEDURE sp_xoa_dich_vu_va_hd_room()
+BEGIN
+delete from dich_vu where dich_vu.ma_dich_vu in (select hop_dong.ma_dich_vu from hop_dong join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu where dich_vu.ma_loai_dich_vu = 3 and year(hop_dong.ngay_lam_hop_dong) between 2015 and 2019)
+END;
+//DELIMITER ;
