@@ -15,7 +15,7 @@
     <form action="/calculate" method="post">
         <label>type the first number: </label>
         <label>
-            <input type="text" name="first_number" placeholder="First Calculator">
+            <input type="text" name="firstNumber" placeholder="First Calculator">
         </label><br>
         <label> Operation: </label>
         <label>
@@ -28,7 +28,7 @@
         </label><br>
         <label>type the second number :</label>
         <label>
-            <input type="text" name="second_number" placeholder="First Calculator">
+            <input type="text" name="secondNumber" placeholder="First Calculator">
         </label><br>
         <input type="submit" id="calculate" value="calculating">
 
