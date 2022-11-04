@@ -9,17 +9,17 @@ import java.io.IOException;
 public class SimpleCalculatorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String error ="";
-        double number1 = 0;
+        double first_number = 0;
         String operation = "";
-        double number2 = 0;
+        double second_number = 0;
         double result =0;
 
 
         try {
-             number1 = Double.parseDouble(request.getParameter("number1"));
+            first_number = Double.parseDouble(request.getParameter("first_number"));
              operation = request.getParameter("operation");
-             number2 = Double.parseDouble(request.getParameter("number2"));
-             result = Calculator.calculate(number1,number2,operation);
+            second_number = Double.parseDouble(request.getParameter("second_number"));
+             result = Calculator.calculate(first_number,second_number,operation);
 
         }catch (NumberFormatException | ArithmeticException e){
             request.setAttribute("error",e.getMessage());
@@ -28,8 +28,8 @@ public class SimpleCalculatorServlet extends HttpServlet {
         }
 
 
-        request.setAttribute("number1",number1);
-        request.setAttribute("number2",number2);
+        request.setAttribute("first_number",first_number);
+        request.setAttribute("second_number",second_number);
         request.setAttribute("operation",operation);
         request.setAttribute("result",result);
 

@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+}
+.header-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 50px;
+    margin: 0 20px;
+}
+.center-items{
+    margin: auto;
+    align-items: center;
+}
+#menu-furama-vi>li:hover{
+    background-color: yellow;
+    color: black;
+}
+#menu-furama-vi>li{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.img{
+    background-image: url("https://furamavietnam.com/wp-content/uploads/2018/07/Vietnam_Danang_Furama_Resort_Exterior-Furama-girl-with-pink-hat.jpg");
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+
+.header-nav.js-header-nav.sticky.stuck {
+    z-index: 999;
+}
+.sticky {
+    display: block;
+}
+.header-nav {
+   position: sticky;
+    top: 0;
+}
+.stickyy{
+    position: sticky;
+    top: -0.5em;
+    left: 0;
+    right: 0;
+}

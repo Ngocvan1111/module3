@@ -13,9 +13,9 @@
 </head>
 <body>
     <form action="/calculate" method="post">
-        <label>type number 1: </label>
+        <label>type the first number: </label>
         <label>
-            <input type="text" name="number1" placeholder="First Calculator">
+            <input type="text" name="first_number" placeholder="First Calculator">
         </label><br>
         <label> Operation: </label>
         <label>
@@ -26,9 +26,9 @@
                 <option>/</option>
             </select>
         </label><br>
-        <label>type number 2 :</label>
+        <label>type the second number :</label>
         <label>
-            <input type="text" name="number2" placeholder="First Calculator">
+            <input type="text" name="second_number" placeholder="First Calculator">
         </label><br>
         <input type="submit" id="calculate" value="calculating">
 

@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Result: ${number1} ${operation} ${number2} = ${result}</h2>
+<h2>Result: ${first_number} ${operation} ${second_number} = ${result}</h2>
 <h2>Er ${error}</h2>
 
 </body>
