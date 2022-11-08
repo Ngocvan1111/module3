@@ -136,7 +136,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2" style="min-height: 100vh; background-color: gainsboro"></div>
+        <div class="col-md-2" style="height: 100vh; background-color: gainsboro">
+
+        </div>
         <div class="col-md-10 img" style="background-color: #86b7fe"></div>
 
     </div>

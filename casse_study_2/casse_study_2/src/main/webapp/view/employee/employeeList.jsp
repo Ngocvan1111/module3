@@ -171,8 +171,12 @@
                 <td>0393090815</td>
                 <td>lvn@gmail.com</td>
                 <td>130 ho xuan huong</td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Edit</button></a></td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Delete</button></a></td>
+                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Exit
+                </button></td>
+                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                    Delete
+                </button></td>
             </tr>
             <tr>
                 <td>1</td>
@@ -209,7 +213,20 @@
 
 
 
-
+<div class="modal" id="modal-delete">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Do you want to remove this facility?</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" name="yes">Yes</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" name="no">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
