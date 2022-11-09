@@ -43,7 +43,7 @@ public class UserDAO implements IUserDao {
     private static final String SQL_TABLE_DROP = "DROP TABLE IF EXISTS EMPLOYEE";
     public UserDAO() {
     }
-    protected Connection getConnection(){
+    private Connection getConnection(){
         Connection connection = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");

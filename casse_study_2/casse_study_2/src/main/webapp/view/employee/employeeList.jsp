@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="a" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -150,7 +152,6 @@
         <table class="table table-success table-striped">
             <tr>
                 <th>STT</th>
-                <th>Customer type id</th>
                 <th>Name </th>
                 <th>Birthday</th>
                 <th>Gender</th>
@@ -158,52 +159,40 @@
                 <th>Phone_number</th>
                 <th>Email</th>
                 <th>Address</th>
-                  <th></th>
-                  <th></th>
+                  <th>Position_id</th>
+                  <th>Education_degree_id</th>
+                  <th>Division_id</th>
+                  <th>Username</th>
+                    <th></th>
+                    <th></th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>12</td>
-                <td>Lại Văn Ngọc</td>
-                <td>06/12/1994</td>
-                <td>Nam</td>
-                <td>123</td>
-                <td>0393090815</td>
-                <td>lvn@gmail.com</td>
-                <td>130 ho xuan huong</td>
-                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Exit
-                </button></td>
-                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
-                    Delete
-                </button></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>12</td>
-                <td>Lại Văn Ngọc</td>
-                <td>06/12/1994</td>
-                <td>Nam</td>
-                <td>123</td>
-                <td>0393090815</td>
-                <td>lvn@gmail.com</td>
-                <td>130 ho xuan huong</td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Edit</button></a></td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Delete</button></a></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>12</td>
-                <td>Lại Văn Ngọc</td>
-                <td>06/12/1994</td>
-                <td>Nam</td>
-                <td>123</td>
-                <td>0393090815</td>
-                <td>lvn@gmail.com</td>
-                <td>130 ho xuan huong</td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Edit</button></a></td>
-                <td><a href="#"><button style="background-color: blue; color: white; border-radius: 5px">Delete</button></a></td>
-            </tr>
+            <c:forEach var="employee" items="${employeeList}" varStatus="status">
+                <tr>
+                    <td>${status.count}</td>
+                    <td><c:out value="${employee.name}"/></td>
+                    <td><c:out value="${employee.date_of_birth}"/></td>
+                    <td><c:out value="${employee.id_card}"/></td>
+                    <td><c:out value="${employee.salary}"/></td>
+                    <td><c:out value="${employee.phone_number}"/></td>
+                    <td><c:out value="${employee.email}"/></td>
+                    <td><c:out value="${employee.address}"/></td>
+                    <td><c:out value="${employee.position_id}"/></td>
+                    <td><c:out value="${employee.education_degree_id}"/></td>
+                    <td><c:out value="${employee.division_id}"/></td>
+                    <td><c:out value="${employee.username}"/></td>
+
+                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Exit
+                    </button></td>
+                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                        Delete
+                    </button></td>
+                </tr>
+
+            </c:forEach>
+
+
+
         </table>
     </div>
 
