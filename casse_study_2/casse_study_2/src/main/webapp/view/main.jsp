@@ -123,11 +123,11 @@
                 <nav class="navbar navbar-expand-lg">
                     <div class="navbar-collapse">
                         <ul id="menu-furama-vi" class="menu navbar-nav w-100 js-main-menu">
-                            <li id="nav-menu-item-5007" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home" class="nav-link main-menu-link">HOME</a></li>
-                            <li id="nav-menu-item-5008" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=employee" class="nav-link main-menu-link">EMPLOYEE</a></li>
-                            <li id="nav-menu-item-5009" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=customer" class="nav-link main-menu-link">CUSTOMER</a></li>
-                            <li id="nav-menu-item-5010" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=service" class="nav-link main-menu-link">SERVICE</a></li>
-                            <li id="nav-menu-item-5011" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=contract" class="nav-link main-menu-link">CONTRACT</a></li>
+                            <li id="nav-menu-item-5007" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/view/main.jsp" class="nav-link main-menu-link">HOME</a></li>
+                            <li id="nav-menu-item-5008" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/employees" class="nav-link main-menu-link">EMPLOYEE</a></li>
+                            <li id="nav-menu-item-5009" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/customer" class="nav-link main-menu-link">CUSTOMER</a></li>
+                            <li id="nav-menu-item-5010" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/service" class="nav-link main-menu-link">SERVICE</a></li>
+                            <li id="nav-menu-item-5011" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/contract" class="nav-link main-menu-link">CONTRACT</a></li>
                         </ul>                        </div>
                 </nav>
             </div>

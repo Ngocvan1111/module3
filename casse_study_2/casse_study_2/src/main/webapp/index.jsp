@@ -12,7 +12,8 @@
     <title>$Title$</title>
   </head>
   <body>
-  <c:redirect url="/furama-home"></c:redirect>
+  <c:redirect url="/view/main.jsp"></c:redirect>
+<%--<c:redirect url="/employee"></c:redirect>--%>
   $END$
   </body>
 </html>

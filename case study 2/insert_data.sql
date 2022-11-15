@@ -13,21 +13,22 @@ values
 ("Hành chính"),
 ("Phục vụ"),
 ("Quản lý");
-
-insert into employee(id, name, date_of_birth, id_card, salary, phone_number, email, address, position_id, education_deree_id, division_id, username)
+ 
+ SET FOREIGN_KEY_CHECKS=0;
+insert into employee(id, name, date_of_birth, id_card, salary, phone_number, email, address, position_id, education_degree_id, division_id, username)
 values
-(1,"Nguyễn Văn An","1970-11-07","4562317861",10000000,"0901234121","annguyen@gamil.com","295 Nguyễn Tất Thành, Đà Nẵng",1,3,1),
-(2,"Lê Văn Bình","1997-04-09","654231234",70000000,"0934212314","binhlv@gmail.com","22 Yên Bái, Đà Nẵng",1,2,2),
-(3,"Hồ Thị Yến","1995-12-12","999231723",14000000,"0412352315","thiyen@gamil.com","K234/11 Hải Châu, Gia Lai",1,3,2),
-(4,"Võ Công Toản","1980-04-04","123231365",17000000,"0374443232","toan0404@gmail.com","77 Hoàng Diệu, Quảng Trị",1,4,4),
-(5,"Nguyễn Bỉnh Phát","1999-12-09","454363232",6000000,"0902341231","phatphat@gmail.com","43 Yên Bái, Đà Nẵng",2,1,1),
-(6,"Khúc Nguyễn An Nghi","2000-11-08","964542311",7000000,"0978653213","annghi20@gmail.com","294 Nguyễn Tất Thành, Đà Nẵng",2,2,3),
-(7,"Nguyễn Hữu Hà","1993-01-01","534323231",8000000,"0941234553","nhh101@gmail.com","4 Nguyễn Chí Thanh, Huế",2,3,2),
-(8,"Nguyễn Hà Đông","1989-09-03","234414123",9000000,"0642123111","donghanguyen@gmail.com","111 Hùng Vương, Hà Nội",2,4,4),
-(9,"Tòng Hoang","1982-09-03","256781231",6000000,"0245144444","hoangtong@gmail.com","213 Hàm Nghi, Đà Nẵng",2,4,4),
-(10,"Nguyễn Công Đạo","1994-01-08","755434343",8000000,"0988767111","nguyencongdao12@gmail.com","6 Hoà Khánh, Đồng Nai",2,3,2);
+(1,"Nguyễn Văn An","1970-11-07","4562317861",10000000,"0901234121","annguyen@gamil.com","295 Nguyễn Tất Thành, Đà Nẵng",1,3,1,"nguyenvanan"),
+(2,"Lê Văn Bình","1997-04-09","654231234",70000000,"0934212314","binhlv@gmail.com","22 Yên Bái, Đà Nẵng",1,2,2,"levanbinh"),
+(3,"Hồ Thị Yến","1995-12-12","999231723",14000000,"0412352315","thiyen@gamil.com","K234/11 Hải Châu, Gia Lai",1,3,2,"hothiyen"),
+(4,"Võ Công Toản","1980-04-04","123231365",17000000,"0374443232","toan0404@gmail.com","77 Hoàng Diệu, Quảng Trị",1,4,4,"vocongtoan"),
+(5,"Nguyễn Bỉnh Phát","1999-12-09","454363232",6000000,"0902341231","phatphat@gmail.com","43 Yên Bái, Đà Nẵng",2,1,1,"nguyenbinhphat"),
+(6,"Khúc Nguyễn An Nghi","2000-11-08","964542311",7000000,"0978653213","annghi20@gmail.com","294 Nguyễn Tất Thành, Đà Nẵng",2,2,3,"khucnguyenannghi"),
+(7,"Nguyễn Hữu Hà","1993-01-01","534323231",8000000,"0941234553","nhh101@gmail.com","4 Nguyễn Chí Thanh, Huế",2,3,2,"nguyenhuuha"),
+(8,"Nguyễn Hà Đông","1989-09-03","234414123",9000000,"0642123111","donghanguyen@gmail.com","111 Hùng Vương, Hà Nội",2,4,4,"nguyenhadong"),
+(9,"Tòng Hoang","1982-09-03","256781231",6000000,"0245144444","hoangtong@gmail.com","213 Hàm Nghi, Đà Nẵng",2,4,4,"tonghoang"),
+(10,"Nguyễn Công Đạo","1994-01-08","755434343",8000000,"0988767111","nguyencongdao12@gmail.com","6 Hoà Khánh, Đồng Nai",2,3,2,"nguyencongdao");
 
-insert into loai_khach(ma_loai_khach, ten_loai_khach)
+insert into customer_type(id, name)
 values
 (1,"Diamond"),
 (2,"Platinium"),
@@ -35,7 +36,7 @@ values
 (4,"Silver"),
 (5,"Member");
 
-insert into khach_hang(ma_khach_hang, ho_ten, ngay_sinh, gioi_tinh, so_cmnd, so_dien_thoai, email, dia_chi, ma_loai_khach)
+insert into customer(id,name, date_of_birth, gender, id_card, phone_number, email, address, customer_type_id)
 values
 (1,"Nguyễn Thị Hào","1970-11-07",0,"643431213","0945423362","thihao07@gmail.com","23 Nguyễn Hoàng, Đà Nẵng",5),
 (2,"Phạm Xuân Diệu","1992-08-08",1,"865342123","0954333333","xuandieu92@gmail.com","K77/22 Thái Phiên, Quảng Trị",3),

@@ -129,11 +129,11 @@
                 <nav class="navbar navbar-expand-lg">
                     <div class="navbar-collapse">
                         <ul id="menu-furama-vi" class="menu navbar-nav w-100 js-main-menu">
-                            <li id="nav-menu-item-5007" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home" class="nav-link main-menu-link">HOME</a></li>
-                            <li id="nav-menu-item-5008" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=employee" class="nav-link main-menu-link">EMPLOYEE</a></li>
-                            <li id="nav-menu-item-5009" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=customer" class="nav-link main-menu-link">CUSTOMER</a></li>
-                            <li id="nav-menu-item-5010" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=service" class="nav-link main-menu-link">SERVICE</a></li>
-                            <li id="nav-menu-item-5011" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/furama-home?action=contract" class="nav-link main-menu-link">CONTRACT</a></li>
+                            <li id="nav-menu-item-5007" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/view/main.jsp" class="nav-link main-menu-link">HOME</a></li>
+                            <li id="nav-menu-item-5008" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/employees" class="nav-link main-menu-link">EMPLOYEE</a></li>
+                            <li id="nav-menu-item-5009" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/customer" class="nav-link main-menu-link">CUSTOMER</a></li>
+                            <li id="nav-menu-item-5010" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/service" class="nav-link main-menu-link">SERVICE</a></li>
+                            <li id="nav-menu-item-5011" class="nav-item  menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"><a href="/contract" class="nav-link main-menu-link">CONTRACT</a></li>
                         </ul>                        </div>
                 </nav>
             </div>
@@ -145,7 +145,7 @@
             <h1 style="text-align: center"> EMPLOYEE LIST</h1>
         </div>
         <div class="col-md-2 center-items">
-            <a href="#" style="margin: auto;background-color: aquamarine"><button>Add new customer</button></a>
+            <a href="#" style="margin: auto;background-color: aquamarine"><button data-bs-toggle="modal" data-bs-target="#modal-insert">Add new customer</button></a>
         </div>
     </div>
     <div class="row" style="margin: 0 12px">
@@ -184,7 +184,7 @@
                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
                         Exit
                     </button></td>
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                    <td><button onclick="inforDelete('${employee.getId()}','${employee.getName()}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
                         Delete
                     </button></td>
                 </tr>
@@ -201,21 +201,65 @@
 
 
 
-
-<div class="modal" id="modal-delete">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Do you want to remove this facility?</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<%--/////// Start Modal Delete /////////////--%>
+<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/employees" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden name="action" value="delete">
+                    <input type="text" hidden id="deleteId" name="deleteId">
+                    <span>Do you want delete user?</span><span style="color:#ff0000" id="deleteName"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" name="yes">Yes</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" name="no">No</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
+<%--/////// End Modal Insert /////////////--%>
+<div class="modal fade" id="modal-insert" tabindex="-1" aria-labelledby="insert-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/employees" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="insert-modal">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden name="action" value="insert">
+                    <label>
+                        Employee name:
+                    </label>
+                    <input type="text"  name="name">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Insert</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<%--/////// End Modal Insert /////////////--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+    function inforDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+
+    }
+    function insertEmployee() {
+
+
+    }
+</script>
 </body>
 </html>

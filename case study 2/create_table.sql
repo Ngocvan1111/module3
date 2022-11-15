@@ -127,3 +127,14 @@ CREATE TABLE contrat_detail (
         REFERENCES attach_facility (id),
     quantity INT
 );
+
+
+
+-- query --
+
+use database_of_furama_resort;
+DELETE from employee where id = 1;
+
+
+
+ 
