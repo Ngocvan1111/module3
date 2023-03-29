@@ -27,4 +27,12 @@ public class CustomerType {
     public void setCustomerTypeName(String CustomerTypeName) {
         this.customerTypeName = CustomerTypeName;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerType{" +
+                "id=" + id +
+                ", customerTypeName='" + customerTypeName + '\'' +
+                '}';
+    }
 }

@@ -1,0 +1,55 @@
+
+^
+java:S1192x"HDefine a constant instead of duplicating this literal "country" 3 times.(ç‰—œ
+P
+java:S1161":Add the "@Override" annotation above this method signature( Üó
+U
+java:S1161":Add the "@Override" annotation above this method signature(ş³‚”ûÿÿÿÿ
+<	java:S131!""Add a default case to this switch.(ë´åİşÿÿÿÿ
+z
+java:S1989#"dHandle the following exceptions that could be thrown by "insertUser": IOException, ServletException.(Ì¼¬Ø
+
+java:S1989&"dHandle the following exceptions that could be thrown by "updateUser": IOException, ServletException.(©ÛÖíùÿÿÿÿ
+x
+java:S1989)"bHandle the following exceptions that could be thrown by "showUser": ServletException, IOException.(ºåâ
+\
+java:S1989."AHandle the "ServletException" thrown here in a "try/catch" block.(½óæ„úÿÿÿÿ
+P
+java:S11612":Add the "@Override" annotation above this method signature(÷¤‹ú
+{
+java:S1989<"eHandle the following exceptions that could be thrown by "showNewForm": ServletException, IOException.(ßçÂ›
+|
+java:S1989?"fHandle the following exceptions that could be thrown by "showEditForm": ServletException, IOException.(ÂõÓÁ
+z
+java:S1989B"dHandle the following exceptions that could be thrown by "deleteUser": IOException, ServletException.(…»“‡
+x
+java:S1989E"bHandle the following exceptions that could be thrown by "showUser": ServletException, IOException.(ºåâ
+|
+java:S1989H"gHandle the following exceptions that could be thrown by "arrangeByName": ServletException, IOException.(š˜ÎD
+}
+java:S1989Y"bHandle the following exceptions that could be thrown by "listUser": IOException, ServletException.(ÁÄ›êşÿÿÿÿ
+\
+java:S1989]"AHandle the "ServletException" thrown here in a "try/catch" block.(½óæ„úÿÿÿÿ
+W
+java:S1172a"<Remove these unused method parameters "request", "response".(ÀıÍÁùÿÿÿÿ
+W
+java:S1172e"<Remove these unused method parameters "request", "response".(ïóïîşÿÿÿÿ
+W
+java:S1172i"<Remove these unused method parameters "request", "response".(ª¨óøÿÿÿÿ
+Š
+java:S1130ƒ"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(íú”æûÿÿÿÿ
+R	java:S125„"<This block of commented-out lines of code should be removed.( ®î¦
+„
+java:S1130’"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(šáÏ@
+Q	java:S125”"<This block of commented-out lines of code should be removed.(íß¾;
+Š
+java:S1130"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(íú”æûÿÿÿÿ
+R	java:S125¢"<This block of commented-out lines of code should be removed.(ÿæÏÅ
+Š
+java:S1130©"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(íú”æûÿÿÿÿ
+W	java:S125°"<This block of commented-out lines of code should be removed.(’­±Ìøÿÿÿÿ
+W	java:S125¹"<This block of commented-out lines of code should be removed.(Ë§”üÿÿÿÿ
+X
+java:S1172Á"<Remove these unused method parameters "request", "response".(ª±ªéÿÿÿÿÿ
+R
+java:S1128"7Remove this unused import 'javax.jws.soap.SOAPBinding'.(î¶âÑûÿÿÿÿ

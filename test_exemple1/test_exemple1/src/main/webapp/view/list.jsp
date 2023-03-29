@@ -46,8 +46,10 @@
                 <th>Phone Number</th>
                 <th>Start day</th>
                 <th>Type pay</th>
-                <th>note</th>
-                <th>Delete</th>
+                <th style="">note</th>
+                <th style="text-align: center; align-items: center"><button id="btn" value="btnvalue" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                    Delete
+                </button></th>
             </tr>
             </thead>
             <tbody>
@@ -61,7 +63,7 @@
 
 
                     <td><c:out value="${room.note}"/></td>
-                    <td><input type="checkbox" name="delete" id="delete"></td>
+                    <td style="text-align: center; align-items: center"><input type="checkbox" class="deletee" name="delet" id="delet" value="${room.getName()},${room.getRoomId()}" ></td>
 
 <%--                    <td><button onclick="inforDelete('${customer.getId()}','${customer.getName()}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete">--%>
 <%--                        Delete--%>
@@ -79,6 +81,73 @@
     </div>
 
 </div>
+
+
+<%--/////////// modal delete ///////////////--%>
+<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/room" method="get">
+            <input type="text" hidden name="action" value="delete">
+            <input type="text" hidden id="deleteId" name="deleteId">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <span>Do you want delete user?</span><span style="color:#ff0000" id="deleteName"></span>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<%--/////////////////// end///////////////////--%>
+<script>
+    function inforDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+
+    }
+    document.getElementById("btn").onclick = function () {
+        // var list = ["Lai Van Ngoc", "Nguyen van chung", "Dang thi nhi"]
+        // var list2 = [3,4,5]
+
+        var checkbox = document.getElementsByClassName("deletee");
+        var resultId = [];
+        var resultName = [];
+        // for (var i = 0;i<checkbox.length;i++){
+        //     if(checkbox[i].checked === true){
+        //         result.push(checkbox[i].value)
+        //     }
+        // }
+
+
+        for (var i = 0;i<checkbox.length;i++){
+            if(checkbox[i].checked === true){
+                var ids = checkbox[i].value;
+                var id = ids.split(",");
+
+                resultId.push(id[1]);
+                resultName.push(id[0]);
+            }
+        }
+
+
+        document.getElementById("deleteId").value = resultId;
+        document.getElementById("deleteName").innerText = resultName;
+
+
+    }
+</script>
 
 </body>
 </html>

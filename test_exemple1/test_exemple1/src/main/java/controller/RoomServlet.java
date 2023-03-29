@@ -63,7 +63,11 @@ public class RoomServlet extends HttpServlet {
 //                    break;
                 case "delete":
 
-                    deleteE(request,response);
+                    try {
+                        deleteE(request,response);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     try {
@@ -76,7 +80,15 @@ public class RoomServlet extends HttpServlet {
 
     }
 
-    private void deleteE(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteE(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+//        int id = Integer.parseInt(request.getParameter("deleteId"));
+        String ids = request.getParameter("deleteId");
+        String[] id = ids.split(",");
+        for(int i =0;i<id.length;i++){
+            roomService.deleteRoom(Integer.parseInt(id[i]));
+        }
+
+        showRoomList(request,response);
     }
 
     private void showRoomList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {

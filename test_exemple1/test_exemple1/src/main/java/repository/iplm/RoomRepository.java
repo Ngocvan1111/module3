@@ -24,6 +24,10 @@ public class RoomRepository implements IRoomRepository {
                 String name = rs.getString("name");
                 String phoneNumber = rs.getString("phone_number");
                 String startDay = rs.getString("start_day");
+
+                String[] startDayAr = startDay.split("-");
+                startDay = startDayAr[2]+"-"+startDayAr[1]+"-"+startDayAr[0];
+
                 int typePayId = rs.getInt("type_pay_id");
                 String typePayName = rs.getString("type_pay_name");
                 String note = rs.getString("note");
@@ -54,5 +58,16 @@ public class RoomRepository implements IRoomRepository {
 
         }
         return typePayList;
+    }
+
+    @Override
+    public boolean deleteRoom(int id) throws SQLException {
+        boolean rowDeleted;
+        String query = "delete from room where room_id = ?;";
+        try (Connection connection =baseRepository.getConnection();PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        }
+        return rowDeleted;
     }
 }

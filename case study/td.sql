@@ -1,0 +1,1 @@
+SELECT * FROM golang.todo_items;

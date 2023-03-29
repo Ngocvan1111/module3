@@ -9,6 +9,7 @@ public class Room {
     private String note;
     private TypePay typePay;
 
+
     public Room() {
     }
 
@@ -54,7 +55,7 @@ public class Room {
         this.startDay = startDay;
     }
 
-    public int getTypePayId() {
+    public S   {
         return typePayId;
     }
 

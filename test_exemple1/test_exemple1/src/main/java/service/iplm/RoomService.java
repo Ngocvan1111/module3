@@ -19,4 +19,9 @@ public class RoomService implements IRoomService {
     public List<TypePay> findAllTypePay() throws SQLException {
         return roomRepository.findAllTypePay();
     }
+
+    @Override
+    public boolean deleteRoom(int id) throws SQLException {
+        return roomRepository.deleteRoom(id);
+    }
 }
