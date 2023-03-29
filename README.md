@@ -8,5 +8,5 @@ Setup DB (using MySQL Workbench):
   + query 
 in module3/case_study_2 to setup DB.
 Run IDE:
-In folder (case_study_2) Natigate to src/main/java and run it manually.
+In folder (case_study_2) Natigate to src/main/java and run it manually.                                                        
 open http://localhost:8084 to view it in your browser
